@@ -1,7 +1,6 @@
-cb( )
-{
-  count=$1
-  for i in $(seq $count); do
-      cd ..;
-done
+cb() {
+  n=${1:-1}
+  while (( n-- > 0 )); do
+    cd .. || break
+  done
 }
