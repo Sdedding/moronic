@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-set -e  # Exit on error
+set -e # Exit on error
 
 # Get the directory where the install script is located
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Create backup directory with timestamp
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
@@ -11,8 +11,8 @@ mkdir -p "$BACKUP_DIR"
 
 # Backup existing .bashrc if it exists
 if [ -f "$HOME/.bashrc" ]; then
-    echo "Backing up existing .bashrc to $BACKUP_DIR"
-    mv "$HOME/.bashrc" "$BACKUP_DIR/"
+  echo "Backing up existing .bashrc to $BACKUP_DIR"
+  mv "$HOME/.bashrc" "$BACKUP_DIR/"
 fi
 
 # Create necessary directories if they don't exist
@@ -24,18 +24,18 @@ ln -sf "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
 
 # Add source line to .bash_profile if it doesn't exist
 if [ -f "$HOME/.bash_profile" ]; then
-    if ! grep -q "source ~/.bashrc" "$HOME/.bash_profile"; then
-        echo "Adding source line to .bash_profile"
-        echo "[ -f ~/.bashrc ] && source ~/.bashrc" >> "$HOME/.bash_profile"
-    fi
+  if ! grep -q "source ~/.bashrc" "$HOME/.bash_profile"; then
+    echo "Adding source line to .bash_profile"
+    echo "[ -f ~/.bashrc ] && source ~/.bashrc" >>"$HOME/.bash_profile"
+  fi
 else
-    echo "Creating .bash_profile"
-    echo "[ -f ~/.bashrc ] && source ~/.bashrc" > "$HOME/.bash_profile"
+  echo "Creating .bash_profile"
+  echo "[ -f ~/.bashrc ] && source ~/.bashrc" >"$HOME/.bash_profile"
 fi
 
 # Create an empty current theme file if it doesn't exist
 if [ ! -f "$DOTFILES_DIR/themes/current" ]; then
-    touch "$DOTFILES_DIR/themes/current"
+  touch "$DOTFILES_DIR/themes/current"
 fi
 
 # Ensure all directories are created with proper permissions
