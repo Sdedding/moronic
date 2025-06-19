@@ -1,0 +1,46 @@
+name: Bash CI/CD Modular
+
+on:
+  push:
+    branches: ["**"]  # trigger on all branches
+  pull_request:
+
+jobs:
+  format:
+    name: Code Formatting with shfmt
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shfmt
+        run: sudo apt-get update && sudo apt-get install -y shfmt
+
+      - name: Run shfmt
+        run: shfmt -d .
+
+  lint:
+    name: Lint with ShellCheck
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck
+        run: shellcheck functions/**/*.bash aliases/**/*.bash bashrc
+
+  test:
+    name: Test with Bats (only on main)
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bats
+        run: sudo apt-get update && sudo apt-get install -y bats
+
+      - name: Run Bats tests
+        run: bats test/
