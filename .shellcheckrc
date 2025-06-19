@@ -1,0 +1,36 @@
+# Allow opening any 'source'd file, even if not specified as input
+external-sources=true
+
+# Allow following any 'source'd file, even if not specified as input
+source-path=SCRIPTDIR
+source-path=aliases
+source-path=functions
+source-path=plugins
+source-path=completion
+
+# Suggest adding a default case in `case` statements
+enable=add-default-case
+
+# Don't warn about using ${var} instead of $var
+disable=SC2250
+
+# Don't warn about arrays being only supported in bash
+disable=SC2039
+
+# Don't warn about bashisms in bash scripts
+shell=bash
+
+# Ignore RC file version warning
+disable=SC1091
+
+# Don't warn about preferring [[ over [
+disable=SC2166
+
+# Allow non-constant source
+disable=SC1090
+
+# Ignore "Can't follow non-constant source"
+disable=SC1091
+
+# Allow multiple stdin redirects
+disable=SC2069
