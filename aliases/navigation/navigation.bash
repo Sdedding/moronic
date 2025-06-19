@@ -1,4 +1,2 @@
 #Aliases
-
-
-
+alias cb='cd ..'
